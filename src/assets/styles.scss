@@ -1,0 +1,21 @@
+.image-uploader {
+	cursor: pointer;
+	margin: auto;
+
+	&:hover {
+		filter: brightness(0.95);
+	}
+}
+
+.big-avatar {
+	height: 100px !important;
+    width: 100px !important;
+    
+    @extend .image-uploader
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
