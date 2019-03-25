@@ -60,8 +60,8 @@ class StoreList extends React.Component {
 							.map((data, index) => (
 								<StoreItem
 									key={index}
-                                    data={{ ...data }}
-                                    brandId={this.props.brandId}
+									data={{ ...data }}
+									brandId={this.props.brandId}
 									openDeleteModal={this.handleClickOpen.bind(this)}
 									styleName="card shadow "
 								/>

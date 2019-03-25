@@ -5,7 +5,8 @@ import {
 	updateFood,
 	loadFoodTypes,
 	addFoodImage,
-	deleteFoodImage
+	deleteFoodImage,
+	updateFoodInternally
 } from 'actions/Brand';
 import Button from 'material-ui/Button';
 import { Link, withRouter } from 'react-router-dom';
@@ -133,9 +134,16 @@ class FoodPage extends React.Component {
 					...this.props.activeFood,
 					...this.state.updatedFood
 				};
-				this.props.onUpdateFood(updatedFood);
+				this.props.onUpdateFoodInternally(updatedFood);
 			}
 		);
+	}
+	updateAtServer() {
+		const updatedFood = {
+			...this.props.activeFood,
+			...this.state.updatedFood
+		};
+		this.props.onUpdateFoodInternally(updatedFood);
 	}
 	render() {
 		const food = this.props.activeFood || {
@@ -405,6 +413,14 @@ class FoodPage extends React.Component {
 						</Paper>
 					</div>
 				</div>
+				<Button
+					onClick={() => this.updateAtServer()}
+					variant="fab"
+					className="fab jr-fab-btn text-white bg-secondary"
+					aria-label="edit"
+				>
+					<i className="zmdi zmdi-save zmdi-hc-fw zmdi-hc-lg" />
+				</Button>
 			</div>
 		);
 	}
@@ -424,6 +440,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		onUpdateFood: brand => {
 			dispatch(updateFood(brand));
+		},
+		onUpdateFoodInternally: food => {
+			dispatch(updateFoodInternally(food));
 		},
 		onLoadFoodTypes: () => {
 			dispatch(loadFoodTypes());

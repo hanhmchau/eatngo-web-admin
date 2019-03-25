@@ -1,6 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadBrand, updateBrand } from '../../../actions/Brand';
+import {
+	loadBrand,
+	updateBrand,
+	updateBrandInternally
+} from '../../../actions/Brand';
 import Button from 'material-ui/Button';
 import { Link, withRouter } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
@@ -51,9 +55,16 @@ class BrandList extends React.Component {
 					...this.props.activeBrand,
 					...this.state.updatedBrand
 				};
-				this.props.onUpdateBrand(updatedBrand);
+				this.props.onUpdateBrandInternally(updatedBrand);
 			}
 		);
+	}
+	updateAtServer() {
+		const updatedBrand = {
+			...this.props.activeBrand,
+			...this.state.updatedBrand
+		};
+		this.props.onUpdateBrand(updatedBrand);
 	}
 	render() {
 		const brand = this.props.activeBrand || {};
@@ -139,15 +150,23 @@ class BrandList extends React.Component {
 									</form>
 								</div>
 							)}
-							{
-								this.state.value === 1 && <StoreList brandId={brand.id} stores={brand.stores} />
-							}
-							{
-								this.state.value === 2 && <FoodList brandId={brand.id} foods={brand.foods}></FoodList>
-							}
+							{this.state.value === 1 && (
+								<StoreList brandId={brand.id} stores={brand.stores} />
+							)}
+							{this.state.value === 2 && (
+								<FoodList brandId={brand.id} foods={brand.foods} />
+							)}
 						</Paper>
 					</div>
 				</div>
+				<Button
+					onClick={() => this.updateAtServer()}
+					variant="fab"
+					className="fab jr-fab-btn text-white bg-secondary"
+					aria-label="edit"
+				>
+					<i className="zmdi zmdi-save zmdi-hc-fw zmdi-hc-lg" />
+				</Button>
 			</div>
 		);
 	}
@@ -166,6 +185,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		onUpdateBrand: brand => {
 			dispatch(updateBrand(brand));
+		},
+		onUpdateBrandInternally: brand => {
+			dispatch(updateBrandInternally(brand));
 		}
 	};
 };

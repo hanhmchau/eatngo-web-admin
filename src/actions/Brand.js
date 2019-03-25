@@ -60,6 +60,13 @@ export const updateBrand = brand => dispatch => {
 	});
 };
 
+export const updateBrandInternally = brand => dispatch => {
+	dispatch({
+		type: 'LOAD_BRAND',
+		brand
+	});
+};
+
 export const createBrand = ({ brand, history }) => dispatch => {
 	fetch(`${URL}/brands`, {
 		method: 'POST',
@@ -127,6 +134,14 @@ export const updateStore = store => {
 	};
 };
 
+export const updateStoreInternally = store => {
+	return dispatch => {
+		dispatch({
+			type: 'UPDATE_STORE',
+			store
+		});
+	};
+};
 
 export const addFood = food => {
 	return dispatch => {
@@ -174,13 +189,13 @@ export const loadFood = id => dispatch => {
 
 export const loadFoodTypes = () => dispatch => {
 	fetch(`${URL}/food-types`)
-	.then(result => result.json())
-	.then(foodTypes => {
-		dispatch({
-			type: 'LOAD_FOOD_TYPES',
-			foodTypes
+		.then(result => result.json())
+		.then(foodTypes => {
+			dispatch({
+				type: 'LOAD_FOOD_TYPES',
+				foodTypes
+			});
 		});
-	});
 };
 
 export const updateFood = food => {
@@ -197,6 +212,15 @@ export const updateFood = food => {
 				type: 'LOAD_FOOD',
 				food
 			});
+		});
+	};
+};
+
+export const updateFoodInternally = food => {
+	return dispatch => {
+		dispatch({
+			type: 'LOAD_FOOD',
+			food
 		});
 	};
 };

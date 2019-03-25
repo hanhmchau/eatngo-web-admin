@@ -8,6 +8,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { TextField } from 'material-ui';
 import { TimePicker } from 'material-ui-pickers';
 import Divider from 'material-ui/Divider';
+import { updateStoreInternally } from '../../../../actions/Brand';
 
 class StoreItem extends React.Component {
 	constructor(props) {
@@ -29,9 +30,14 @@ class StoreItem extends React.Component {
 		);
 	}
 	update(key, value) {
-		this.props.onUpdateStore({
+		this.props.onUpdateStoreInternally({
 			...this.props.data,
 			[key]: value
+		});
+	}
+	updateAtServer() {
+		this.props.onUpdateStore({
+			...this.props.data
 		});
 	}
 	render() {
@@ -43,7 +49,7 @@ class StoreItem extends React.Component {
 			phone,
 			openingHour = new Date(),
 			closingHour
-        } = this.props.data;
+		} = this.props.data;
 		openingHour = new Date(`${new Date().toDateString()} ${openingHour}`);
 		closingHour = new Date(`${new Date().toDateString()} ${closingHour}`);
 		return (
@@ -116,6 +122,16 @@ class StoreItem extends React.Component {
 						<li>
 							<Button
 								onClick={() => {
+									this.updateAtServer();
+								}}
+								color="primary"
+							>
+								Save
+							</Button>
+						</li>
+						<li>
+							<Button
+								onClick={() => {
 									this.props.openDeleteModal(id);
 								}}
 								color="secondary"
@@ -137,6 +153,9 @@ const mapDispatchToProps = dispatch => {
 		},
 		onUpdateStore: store => {
 			dispatch(updateStore(store));
+		},
+		onUpdateStoreInternally: store => {
+			dispatch(updateStoreInternally(store));
 		}
 	};
 };
