@@ -12,7 +12,7 @@ AccountKit.init({
     state: 'b895234af645976dee1e39a60fdd0592',
     version: 'v3.2',
     fbAppEventsEnabled: true,
-    redirect: '{{REDIRECT_URL}}'
+    redirect: 'REDIRECT_URL'
 });
 console.log('Initializing account kit.');
 
